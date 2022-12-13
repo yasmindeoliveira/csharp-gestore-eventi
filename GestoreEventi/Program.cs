@@ -2,31 +2,86 @@
 using GestoreEventi;
 using GestoreEventi.CustomException;
 
-List<Evento> eventi = new List<Evento>();
+Evento eventoinserito = new Evento("Conferenza sul clima", "12/20/2022", 150);
+Console.WriteLine(eventoinserito.ToString());
+eventoinserito.PrenotaPosti(120);
+Console.WriteLine(eventoinserito.ToString());
+eventoinserito.DisdiciPosti(10);
+Console.WriteLine(eventoinserito.ToString());
+
+
+Console.WriteLine("Inserisci il nome dell'evento:");
+string titoloUtente = Console.ReadLine();
+Console.WriteLine("Inserisci la data dell'evento (MM/dd/yyyy):");
+string dataUtente = Console.ReadLine();
+Console.WriteLine("Inserisci il numero di posti totali:");
+int postiUtente = int.Parse(Console.ReadLine());
+
+
+Evento eventoUtente = new Evento(titoloUtente, dataUtente, postiUtente);
+
+
+Console.WriteLine("Quanti posti desideri prenotare?");
+int quantitaPostiUtente = int.Parse(Console.ReadLine());
+eventoUtente.PrenotaPosti(quantitaPostiUtente);
+
+int postiDisponibili = eventoUtente.GetMaxPosti() - eventoUtente.GetPostiPrenotati();
+Console.WriteLine("I posti disponibili sono: " + postiDisponibili);
+Console.WriteLine("I posti prenotati sono: " + eventoUtente.GetPostiPrenotati());
+
+Console.WriteLine("Vuoi disdire dei posti? (si/no)?");
+string check = Console.ReadLine();
+while(check == "si")
+{
+    Console.WriteLine("Indica il numero di posti da disdire:");
+    int numeriPostiDisdetta = int.Parse(Console.ReadLine());
+    eventoUtente.DisdiciPosti(numeriPostiDisdetta);
+
+    postiDisponibili = eventoUtente.GetMaxPosti() - eventoUtente.GetPostiPrenotati();
+    Console.WriteLine("I posti disponibili sono: " + postiDisponibili);
+    Console.WriteLine("I posti prenotati sono: " + eventoUtente.GetPostiPrenotati());
+
+    Console.WriteLine("Vuoi disdire altri posti? (si/no)?");
+    check = Console.ReadLine();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
-Console.WriteLine("Titolo evento:");
-Console.ReadLine();
-Console.WriteLine("Data evento:");
-Console.ReadLine();
-Console.WriteLine("Capienza massima:");
-Console.ReadLine();
-Console.WriteLine("Posti prenotati:");
-Console.ReadLine(); 
-*/
-
-
-
 try
 {
     Evento eventoinserito = new Evento("Conferenza sul clima", "12/20/2022", 150);
     Console.WriteLine(eventoinserito.ToString());
-    eventoinserito.PrenotaPosti(20);
+    eventoinserito.PrenotaPosti(120);
     Console.WriteLine(eventoinserito.ToString());
-    eventoinserito.DisdiciPosti(40);
+    eventoinserito.DisdiciPosti(10);
     Console.WriteLine(eventoinserito.ToString());
 
+    Console.WriteLine("Inserisci il nome dell'evento:");
+    Console.ReadLine();
+    Console.WriteLine("Inserisci la data dell'evento (MM/dd/yyyy):");
+    Console.ReadLine();
+    Console.WriteLine("Inserisci il numero di posti totali:");
+    Console.ReadLine();
+    
 }
 catch(ResultCannotBeNegativeException e)
 {
@@ -40,4 +95,4 @@ catch(Exception e)
 {
     Console.WriteLine(e.Message);
 }
-
+*/
