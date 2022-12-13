@@ -38,14 +38,12 @@ while(numeroEventi != programma.EventiTotali())
 
 }
 
-Console.WriteLine(programma.EventiTotali());
+Console.WriteLine("\nTotale eventi: " + programma.EventiTotali());
 Console.WriteLine(programma);
 Console.WriteLine("Inseriisci una data (MM/dd/yyyy):");
 string dataInseritaDaUtente = Console.ReadLine();
 Console.WriteLine(ProgrammaEventi.GetStringaListaEventi(programma.eventiInData(dataInseritaDaUtente)));
 programma.SvuotaLista();
-
-
 
 /*
 Console.WriteLine("Quanti posti desideri prenotare?");
@@ -73,24 +71,6 @@ while(check == "si")
 }
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 try
