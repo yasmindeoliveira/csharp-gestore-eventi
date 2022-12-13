@@ -36,17 +36,33 @@ namespace GestoreEventi
             return eventiInData;
         }
 
-        public static void StampaListaEventi(List<Evento>listaDaStampare)
+        public static string GetStringaListaEventi(List<Evento>listaDaStampare)
         {
+            string eventi = "";
             foreach(Evento evento in listaDaStampare)
             {
-                Console.WriteLine(evento);
+                eventi += evento.ToString();
+                eventi += "\n";
             }
+            return eventi;
         }
 
         public int EventiTotali()
         {
             return this.eventi.Count;
+        }
+
+        public void SvuotaLista()
+        {
+            this.eventi.Clear();
+        }
+
+        public override string ToString()
+        {
+            return "Nome programma evento: " 
+                + this.titolo 
+                + "\n\n"
+                + ProgrammaEventi.GetStringaListaEventi(this.eventi);
         }
     }
 }
