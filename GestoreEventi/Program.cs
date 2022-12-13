@@ -7,7 +7,7 @@ Console.WriteLine(eventoinserito.ToString());
 eventoinserito.PrenotaPosti(120);
 Console.WriteLine(eventoinserito.ToString());
 eventoinserito.DisdiciPosti(10);
-Console.WriteLine(eventoinserito.ToString());
+Console.WriteLine(eventoinserito);
 
 
 Console.WriteLine("Inserisci il nome dell'evento:");
