@@ -10,18 +10,17 @@ namespace GestoreEventi
     public class Evento
     {
         private string titolo;
-        private string data;
+        private DateTime data;
         private int maxPosti;
         private int postiPrenotati = 0;
 
         // COSTRUTTORE
 
-        public Evento(string titolo, string data, int maxPosti, int postiPrenotati)
+        public Evento(string titolo, string data, int maxPosti)
         {
-            this.titolo = titolo;
-            this.data = data;
-            this.maxPosti = maxPosti;
-            this.postiPrenotati = postiPrenotati;
+            SetTitolo(titolo);
+            SetData(data);
+            SetMaxPosti(maxPosti);
         }
 
         // GETTERS E SETTERS
@@ -29,7 +28,7 @@ namespace GestoreEventi
         {
             return this.titolo;
         }
-        public string GetData()
+        public DateTime GetData()
         {
             return this.data;
         }
@@ -46,15 +45,16 @@ namespace GestoreEventi
         {
             if (titolo == null)
             {
-                throw new ArgumentNullException("NOn puoi lasciare questo campo vuoto.");
+                throw new ArgumentNullException("Non puoi lasciare questo campo vuoto.");
             }
             this.titolo = titolo;
         }
         public void SetData(string data)
         {
-            this.data = data;
+            DateTime dateTime = DateTime.Parse(data);
+            this.data = dateTime;
         }
-        public void SetMaxPosti(int maxPosti)
+        private void SetMaxPosti(int maxPosti)
         {
             if(maxPosti < 0)
             {
@@ -62,7 +62,7 @@ namespace GestoreEventi
             }
             this.maxPosti = maxPosti;
         }
-        public void SetPostiPrenotati(int postiPrenotati)
+        private void SetPostiPrenotati(int postiPrenotati)
         {
             if (maxPosti < 0)
             {
@@ -73,32 +73,41 @@ namespace GestoreEventi
 
         // METODI
 
-        public int PrenotaPosti(int postiPrenotati)
+        public void PrenotaPosti(int postiDaPrenotare)
         {
-            int postiAggiunti = postiPrenotati;
-            for(int i = 0; i<postiAggiunti; i++)
+            // ci puo essere unerrore e quindi una eccezione...
+            if (postiDaPrenotare < 0)
             {
-                postiAggiunti++;
+                throw new ResultCannotBeNegativeException("Non puoi inserire un valore negativo");
             }
-            return postiAggiunti;
+            if(maxPosti - postiPrenotati < postiDaPrenotare)
+            {
+                throw new Exception("Non puoi prenotare posti non disponibili");
+            }
+            this.postiPrenotati += postiDaPrenotare;
+            
         }
 
-        public int DisdiciPosti(int postiPrenotati)
+        public void DisdiciPosti(int postiDaDisdire)
         {
-            int postiTolti = postiPrenotati;
-            for(int i = 0; i<postiTolti; i++)
+            if (postiDaDisdire < 0)
             {
-                postiTolti--;
+                throw new ResultCannotBeNegativeException("Non puoi inserire un valore negativo");
             }
-            return postiTolti;
+            if (this.postiPrenotati - postiDaDisdire < 0)
+            {
+                throw new ResultCannotBeNegativeException("Non puoi disdire più posti di quelli prenotati");
+            }
+            this.postiPrenotati -= postiDaDisdire;
         }
 
         public override string ToString()
         {
+            string dataStringa = this.data.ToString("dd/MM/yyyy");
             return "Titolo: " 
                 + this.titolo 
                 + "\nData: " 
-                + this.data 
+                + dataStringa 
                 + "\nCapienza massima: " 
                 + this.maxPosti 
                 + "\nPosti prenotati: " 
